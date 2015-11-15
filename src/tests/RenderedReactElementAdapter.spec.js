@@ -130,7 +130,7 @@ describe('RenderedReactElementadapter', () => {
 
     describe('text content', () => {
 
-        let MultiContentComponent;
+        let SingleContentComponent, DualContentComponent, MultiContentComponent, MixedContentComponent;
         beforeEach(() => {
 
             MultiContentComponent = React.createClass({
@@ -143,9 +143,24 @@ describe('RenderedReactElementadapter', () => {
                     )
                 }
             });
+
+            SingleContentComponent = React.createClass({
+                render() { return ( <div>{this.props.content}</div> ) }
+            });
+
+            DualContentComponent = React.createClass({
+                render() { return ( <div>{this.props.content1}{this.props.content2}</div> ) }
+            });
+
+            MixedContentComponent = React.createClass({
+                render() { return ( <div>{this.props.content1}<span>centre</span>{this.props.content2}</div> ) }
+            });
+
             const renderedComponent = TestUtils.renderIntoDocument(<MultiContentComponent count={10} />);
             component = GlobalHook.findComponent(renderedComponent);
         });
+
+
 
         it('renders the text individually', () => {
             const button = adapter.getChildren(component)[0];
@@ -174,10 +189,42 @@ describe('RenderedReactElementadapter', () => {
 
             const renderedComponent = TestUtils.renderIntoDocument(<MultiContentComponent count={null} />);
             component = GlobalHook.findComponent(renderedComponent);
-            adapter.setOptions({ concatTextContent: true })
+            adapter.setOptions({ concatTextContent: true });
             const button = adapter.getChildren(component)[0];
             const children = adapter.getChildren(button);
             expect(children, 'to equal', [ 'Button clicked  times' ]);
+        });
+
+        it('returns a single content item as the original type', () => {
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<SingleContentComponent content={42} />));
+
+            const theDiv = adapter.getChildren(component)[0];
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ 42 ]);
+        });
+
+        it('returns a single content item as a string when using `convertToString:true`', () => {
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<SingleContentComponent content={42} />));
+            adapter.setOptions({ convertToString: true })
+            const theDiv = adapter.getChildren(component)[0];
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '42' ]);
+        });
+
+        it('returns the two content items as strings', () => {
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<DualContentComponent content1={42} content2={43} />));
+
+            const theDiv = adapter.getChildren(component)[0];
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '42', '43' ]);
+        });
+
+        it('returns the 2 content items in mixed children as strings', () => {
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<MixedContentComponent content1={42} content2={43} />));
+
+            const theDiv = adapter.getChildren(component)[0];
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '42', expect.it('to be an', 'object'), '43' ]);
         });
 
     });

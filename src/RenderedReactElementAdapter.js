@@ -51,7 +51,7 @@ class RenderedReactElementAdapter {
         let children = [];
         if (comp.data.children) {
             if (isRawType(comp.data.children)) {
-                return [comp.data.children];
+                return this._options.convertToString ? [ '' + comp.data.children ] : [ comp.data.children ];
             }
             children = comp.data.children.map(child => {
                 const renderedChild = GlobalHook.findInternalComponent(child);
