@@ -1,6 +1,6 @@
 {
   "name": "unexpected-htmllike-reactrendered-adapter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "build": "babel src -d lib --source-maps true",
     "prepublish": "npm run build",
@@ -19,6 +19,7 @@
     "unexpected": "^10.0.2"
   },
   "dependencies": {
-    "object-assign": "^4.0.1"
+    "object-assign": "^4.0.1",
+    "react-render-hook": "^0.1.0"
   }
 }
