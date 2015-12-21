@@ -77,5 +77,6 @@ class RenderedReactElementAdapter {
     }
 }
 
+RenderedReactElementAdapter.prototype.classAttributeName = 'className';
 
 export default RenderedReactElementAdapter;

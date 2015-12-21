@@ -227,5 +227,10 @@ describe('RenderedReactElementadapter', () => {
             expect(adapter.getChildren(theDiv), 'to satisfy', [ '42', expect.it('to be an', 'object'), '43' ]);
         });
 
+        it('has the correct classAttributeName property', () => {
+
+            expect(adapter.classAttributeName, 'to equal', 'className');
+        });
+
     });
 });
