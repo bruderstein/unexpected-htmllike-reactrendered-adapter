@@ -69,9 +69,6 @@ class RenderedReactElementAdapter {
             }
             children = comp.data.children.map(child => {
                 const renderedChild = GlobalHook.findInternalComponent(child);
-                if (renderedChild.element._stringText === '0') {
-                    console.log('Child is', child)
-                }
                 switch (renderedChild.data.nodeType) {
                     case 'NativeWrapper':
                         return GlobalHook.findInternalComponent(renderedChild.data.children[0]);
