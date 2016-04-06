@@ -13,16 +13,30 @@ function isRawType(value) {
         value === null;
 }
 
+function convertValueTypeToString(value) {
+
+    if (typeof value === 'string') { // Common case can be fasttracked
+        return value;
+    }
+
+    if (value === null || value === undefined) {
+        return '';
+    }
+
+    return '' + value;
+}
+
 function concatenateStringChildren(accum, value) {
-    if (typeof value === 'string' && accum.length &&
-        typeof accum[accum.length - 1] === 'string')
+    if (isRawType(value) && accum.length &&
+        isRawType(accum[accum.length - 1]))
     {
-        accum[accum.length - 1] = accum[accum.length - 1] + value;
+        accum[accum.length - 1] = convertValueTypeToString(accum[accum.length - 1]) + convertValueTypeToString(value);
         return accum;
     }
     accum.push(value);
     return accum;
 }
+
 
 class RenderedReactElementAdapter {
 
@@ -55,11 +69,14 @@ class RenderedReactElementAdapter {
             }
             children = comp.data.children.map(child => {
                 const renderedChild = GlobalHook.findInternalComponent(child);
+                if (renderedChild.element._stringText === '0') {
+                    console.log('Child is', child)
+                }
                 switch (renderedChild.data.nodeType) {
                     case 'NativeWrapper':
                         return GlobalHook.findInternalComponent(renderedChild.data.children[0]);
                     case 'Text':
-                        return renderedChild.data.text;
+                        return this._options.convertToString ? '' + renderedChild.data.text : renderedChild.data.text;
                 }
 
                 return renderedChild;

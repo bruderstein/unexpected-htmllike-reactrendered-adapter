@@ -232,5 +232,75 @@ describe('RenderedReactElementadapter', () => {
             expect(adapter.classAttributeName, 'to equal', 'className');
         });
 
+        it('returns numerical content as a string when convertToString is true', () => {
+
+            const TestComponent = React.createClass({
+                render() {
+                    return <div>{42}</div>;
+                }
+            });
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
+            const theDiv = adapter.getChildren(component)[0];
+            adapter.setOptions({ convertToString: true })
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '42' ])
+        });
+
+        it('returns concatenates numerical content when convertToString and concatTextContent is true', () => {
+
+            const TestComponent = React.createClass({
+                render() {
+                    return <div>{4}{2}</div>;
+                }
+            });
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
+            const theDiv = adapter.getChildren(component)[0];
+            adapter.setOptions({ convertToString: true, concatTextContent: true });
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '42' ])
+        });
+
+        it('ignores null content with numerical children when concatenating', () => {
+
+            const TestComponent = React.createClass({
+                render() {
+                    return <div>{4}{null}</div>;
+                }
+            });
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
+            const theDiv = adapter.getChildren(component)[0];
+            adapter.setOptions({ convertToString: true, concatTextContent: true });
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '4' ])
+        });
+        
+        it('ignores null content with numerical children when not concatenating', () => {
+
+            const TestComponent = React.createClass({
+                render() {
+                    return <div>{4}{null}</div>;
+                }
+            });
+ 
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
+            const theDiv = adapter.getChildren(component)[0];
+            adapter.setOptions({ convertToString: true });
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '4' ])
+        });
+        
+        it('treats a zero as a normal number', () => {
+
+            const TestComponent = React.createClass({
+                render() {
+                    return <div>Hello {0}</div>;
+                }
+            });
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
+            const theDiv = adapter.getChildren(component)[0];
+            adapter.setOptions({ convertToString: true });
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ 'Hello ', '0' ])
+        });
+
     });
 });

@@ -11,3 +11,6 @@ Add `classAttributeName` for compatibility with unexpected-htmllike v0.4.0
 
 ## v0.2.1
 Fix dependency version for react-render-hook
+
+## v1.0.0
+Fix convertToString and concatTextContent options to work properly with numerical content
