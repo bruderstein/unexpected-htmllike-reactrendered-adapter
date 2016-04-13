@@ -21,5 +21,7 @@ Update react-render-hook dependency to fix rendering numerical 0
 ## v2.0.0
 Drop support for React 0.13.x, add support for React v15.x.x (thanks Gustav Nikolaj)
 
+## v2.0.1
+Update dep for react-render-hook, which drops it's peerDep for React
 
 
