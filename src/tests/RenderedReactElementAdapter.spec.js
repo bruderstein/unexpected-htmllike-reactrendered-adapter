@@ -2,9 +2,8 @@ import '../testHelpers/emulateDom';
 import RenderedReactElementAdapter from '../RenderedReactElementAdapter';
 import GlobalHook from 'react-render-hook';
 import Unexpected from 'unexpected';
-import React from 'react/addons';
-
-const TestUtils = React.addons.TestUtils;
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 const expect = Unexpected.clone();
 

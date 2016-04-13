@@ -8,14 +8,15 @@
   },
   "main": "lib/index.js",
   "peerDependencies": {
-    "react": "0.13.x || 0.14.x"
+    "react": "^0.14.0 || ^15.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.29",
     "domino": "^1.0.19",
     "mocha": "^2.3.3",
     "object-assign": "^4.0.1",
-    "react": "^0.14.2",
+    "react": "^15.0.0",
+    "react-addons-test-utils": "^15.0.0",
     "unexpected": "^10.0.2"
   },
   "dependencies": {
