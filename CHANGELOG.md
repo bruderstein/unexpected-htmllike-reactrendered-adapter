@@ -14,3 +14,12 @@ Fix dependency version for react-render-hook
 
 ## v1.0.0
 Fix convertToString and concatTextContent options to work properly with numerical content
+
+## v1.0.1
+Update react-render-hook dependency to fix rendering numerical 0
+
+## v2.0.0
+Drop support for React 0.13.x, add support for React v15.x.x (thanks Gustav Nikolaj)
+
+
+
