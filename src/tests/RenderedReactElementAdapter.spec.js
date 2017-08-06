@@ -3,19 +3,19 @@ import RenderedReactElementAdapter from '../RenderedReactElementAdapter';
 import GlobalHook from 'react-render-hook';
 import Unexpected from 'unexpected';
 import React from 'react';
-import TestUtils from 'react-addons-test-utils';
+import TestUtils from 'react-dom/test-utils';
 
 const expect = Unexpected.clone();
 
-const Simple = React.createClass({
+class Simple extends React.Component {
     render() {
         return (
             <span id={this.props.id}>{this.props.text}</span>
         );
     }
-});
+};
 
-const TestComponent = React.createClass({
+class TestComponent extends React.Component {
     render() {
         return (
             <div className="test">
@@ -24,8 +24,7 @@ const TestComponent = React.createClass({
             </div>
         );
     }
-
-});
+}
 
 describe('RenderedReactElementadapter', () => {
 
@@ -132,7 +131,7 @@ describe('RenderedReactElementadapter', () => {
         let SingleContentComponent, DualContentComponent, MultiContentComponent, MixedContentComponent;
         beforeEach(() => {
 
-            MultiContentComponent = React.createClass({
+            MultiContentComponent = class MultiContentComponent extends React.Component {
                 render() {
 
                     return (
@@ -141,19 +140,19 @@ describe('RenderedReactElementadapter', () => {
                         </button>
                     )
                 }
-            });
+            };
 
-            SingleContentComponent = React.createClass({
+            SingleContentComponent = class SingleContentComponent extends React.Component {
                 render() { return ( <div>{this.props.content}</div> ) }
-            });
+            };
 
-            DualContentComponent = React.createClass({
+            DualContentComponent = class DualContentComponent extends React.Component {
                 render() { return ( <div>{this.props.content1}{this.props.content2}</div> ) }
-            });
+            };
 
-            MixedContentComponent = React.createClass({
+            MixedContentComponent = class MixedContentComponent extends React.Component {
                 render() { return ( <div>{this.props.content1}<span>centre</span>{this.props.content2}</div> ) }
-            });
+            };
 
             const renderedComponent = TestUtils.renderIntoDocument(<MultiContentComponent count={10} />);
             component = GlobalHook.findComponent(renderedComponent);
@@ -199,7 +198,7 @@ describe('RenderedReactElementadapter', () => {
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<SingleContentComponent content={42} />));
 
             const theDiv = adapter.getChildren(component)[0];
-            expect(adapter.getChildren(theDiv), 'to satisfy', [ 42 ]);
+            expect(adapter.getChildren(theDiv), 'to satisfy', [ '42' ]);
         });
 
         it('returns a single content item as a string when using `convertToString:true`', () => {
@@ -220,7 +219,8 @@ describe('RenderedReactElementadapter', () => {
 
         it('returns the 2 content items in mixed children as strings', () => {
 
-            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<MixedContentComponent content1={42} content2={43} />));
+            const instance = TestUtils.renderIntoDocument(<MixedContentComponent content1={42} content2={43} />)
+            const component = GlobalHook.findComponent(instance);
 
             const theDiv = adapter.getChildren(component)[0];
             expect(adapter.getChildren(theDiv), 'to satisfy', [ '42', expect.it('to be an', 'object'), '43' ]);
@@ -233,11 +233,11 @@ describe('RenderedReactElementadapter', () => {
 
         it('returns numerical content as a string when convertToString is true', () => {
 
-            const TestComponent = React.createClass({
+            class TestComponent extends React.Component {
                 render() {
                     return <div>{42}</div>;
                 }
-            });
+            }
 
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
             const theDiv = adapter.getChildren(component)[0];
@@ -247,11 +247,11 @@ describe('RenderedReactElementadapter', () => {
 
         it('returns concatenates numerical content when convertToString and concatTextContent is true', () => {
 
-            const TestComponent = React.createClass({
+            class TestComponent extends React.Component {
                 render() {
                     return <div>{4}{2}</div>;
                 }
-            });
+            }
 
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
             const theDiv = adapter.getChildren(component)[0];
@@ -261,11 +261,11 @@ describe('RenderedReactElementadapter', () => {
 
         it('ignores null content with numerical children when concatenating', () => {
 
-            const TestComponent = React.createClass({
+            class TestComponent extends React.Component {
                 render() {
                     return <div>{4}{null}</div>;
                 }
-            });
+            };
 
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
             const theDiv = adapter.getChildren(component)[0];
@@ -275,11 +275,11 @@ describe('RenderedReactElementadapter', () => {
         
         it('ignores null content with numerical children when not concatenating', () => {
 
-            const TestComponent = React.createClass({
+            class TestComponent extends React.Component {
                 render() {
                     return <div>{4}{null}</div>;
                 }
-            });
+            };
  
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
             const theDiv = adapter.getChildren(component)[0];
@@ -289,11 +289,11 @@ describe('RenderedReactElementadapter', () => {
         
         it('treats a zero as a normal number', () => {
 
-            const TestComponent = React.createClass({
+            class TestComponent extends React.Component {
                 render() {
                     return <div>Hello {0}</div>;
                 }
-            });
+            }
 
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
             const theDiv = adapter.getChildren(component)[0];
