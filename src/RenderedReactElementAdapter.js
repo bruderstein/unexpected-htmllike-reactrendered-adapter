@@ -1,5 +1,4 @@
 import GlobalHook from 'react-render-hook';
-import React from 'react';
 import ObjectAssign from 'object-assign';
 
 const defaultOptions = {};

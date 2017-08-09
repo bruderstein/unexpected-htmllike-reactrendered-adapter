@@ -1,6 +1,6 @@
 {
   "name": "unexpected-htmllike-reactrendered-adapter",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "scripts": {
     "build": "babel src -d lib --source-maps true",
     "prepublish": "npm run build",
@@ -8,19 +8,22 @@
   },
   "main": "lib/index.js",
   "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0"
+    "react": "^16.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.29",
     "domino": "^1.0.19",
+    "jsdom": "^11.1.0",
+    "jsdom-global": "^3.0.2",
     "mocha": "^2.3.3",
     "object-assign": "^4.0.1",
-    "react": "^15.0.0",
+    "react": "^16.0.0-beta.1",
     "react-addons-test-utils": "^15.0.0",
+    "react-dom": "^16.0.0-beta.1",
     "unexpected": "^10.0.2"
   },
   "dependencies": {
     "object-assign": "^4.0.1",
-    "react-render-hook": "^0.1.3"
+    "react-render-hook": "^1.0.0"
   }
 }

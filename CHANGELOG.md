@@ -24,4 +24,7 @@ Drop support for React 0.13.x, add support for React v15.x.x (thanks Gustav Niko
 ## v2.0.1
 Update dep for react-render-hook, which drops it's peerDep for React
 
+## v3.0.0
+Update dependencies for React v16 support
+
 
