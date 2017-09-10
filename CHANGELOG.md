@@ -27,4 +27,6 @@ Update dep for react-render-hook, which drops it's peerDep for React
 ## v3.0.0
 Update dependencies for React v16 support
 
+## v3.0.1
+Peer dep fixed to React 16-rc
 
