@@ -1,6 +1,6 @@
 {
   "name": "unexpected-htmllike-reactrendered-adapter",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "scripts": {
     "build": "babel src -d lib --source-maps true",
     "prepublish": "npm run build",
@@ -8,7 +8,7 @@
   },
   "main": "lib/index.js",
   "peerDependencies": {
-    "react": "^16.0.0-rc"
+    "react": "^16.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.29",

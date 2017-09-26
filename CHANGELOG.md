@@ -30,3 +30,5 @@ Update dependencies for React v16 support
 ## v3.0.1
 Peer dep fixed to React 16-rc
 
+## v3.0.2
+Peer dep React 16 official
