@@ -272,7 +272,7 @@ describe('RenderedReactElementadapter', () => {
             adapter.setOptions({ convertToString: true, concatTextContent: true });
             expect(adapter.getChildren(theDiv), 'to satisfy', [ '4' ])
         });
-        
+
         it('ignores null content with numerical children when not concatenating', () => {
 
             class TestComponent extends React.Component {
@@ -280,13 +280,13 @@ describe('RenderedReactElementadapter', () => {
                     return <div>{4}{null}</div>;
                 }
             };
- 
+
             const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
             const theDiv = adapter.getChildren(component)[0];
             adapter.setOptions({ convertToString: true });
             expect(adapter.getChildren(theDiv), 'to satisfy', [ '4' ])
         });
-        
+
         it('treats a zero as a normal number', () => {
 
             class TestComponent extends React.Component {
@@ -301,5 +301,46 @@ describe('RenderedReactElementadapter', () => {
             expect(adapter.getChildren(theDiv), 'to satisfy', [ 'Hello ', '0' ])
         });
 
+    });
+
+    describe('with fragments', function () {
+        class TestComponent extends React.Component {
+            render () {
+                let children = (
+                        <React.Fragment>
+                            <li>one</li>
+                            <li>two</li>
+                        </React.Fragment>
+                );
+
+                if (this.props.includeEnd) {
+                    children = [children, <li>End</li>]
+                }
+                return (
+                    <ol>
+                        {children}
+                    </ol>
+                );
+            }
+        }
+
+        it('renders a fragment', function () {
+
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent />));
+            const olChildren = adapter.getChildren(component)[0];
+            expect(adapter.getName(adapter.getChildren(olChildren)[0]), 'to equal', 'li');
+            expect(adapter.getName(adapter.getChildren(olChildren)[1]), 'to equal', 'li');
+            expect(adapter.getChildren(olChildren), 'to have length', 2);
+        });
+
+        it('renders a fragment with an extra sibling of the fragment', function () {
+            const component = GlobalHook.findComponent(TestUtils.renderIntoDocument(<TestComponent includeEnd={true} />));
+            const olChildren = adapter.getChildren(component)[0];
+            expect(adapter.getName(adapter.getChildren(olChildren)[0]), 'to equal', 'li');
+            expect(adapter.getName(adapter.getChildren(olChildren)[1]), 'to equal', 'li');
+            expect(adapter.getName(adapter.getChildren(olChildren)[2]), 'to equal', 'li');
+            expect(adapter.getChildren(adapter.getChildren(olChildren)[2]), 'to equal', [ 'End' ]);
+            expect(adapter.getChildren(olChildren), 'to have length', 3);
+        });
     });
 });

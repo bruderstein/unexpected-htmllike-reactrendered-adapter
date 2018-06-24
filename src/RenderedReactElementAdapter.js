@@ -69,14 +69,17 @@ class RenderedReactElementAdapter {
             children = comp.data.children.map(child => {
                 const renderedChild = GlobalHook.findInternalComponent(child);
                 switch (renderedChild.data.nodeType) {
+                  case 'Wrapper': // A React.Fragment
+                        return renderedChild.data.children.map(child => GlobalHook.findInternalComponent(child));
                     case 'NativeWrapper':
-                        return GlobalHook.findInternalComponent(renderedChild.data.children[0]);
+                        return [ GlobalHook.findInternalComponent(renderedChild.data.children[0]) ];
                     case 'Text':
-                        return this._options.convertToString ? '' + renderedChild.data.text : renderedChild.data.text;
+                        return [ this._options.convertToString ? '' + renderedChild.data.text : renderedChild.data.text ];
                 }
 
-                return renderedChild;
-            });
+                return [ renderedChild ];
+            })
+            .reduce((allChildren, child) => allChildren.concat(child), []);
 
             if (this._options.concatTextContent) {
                 children = children.reduce(concatenateStringChildren, [])
