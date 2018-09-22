@@ -35,3 +35,6 @@ Peer dep React 16 official
 
 ## v3.0.3
 Fixed React.Fragment support for React 16.4
+
+## v3.0.4
+Fixed support for React 16.5
