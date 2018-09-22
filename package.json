@@ -17,12 +17,12 @@
     "jsdom-global": "^3.0.2",
     "mocha": "^2.3.3",
     "object-assign": "^4.0.1",
-    "react": "^16.4.0",
-    "react-dom": "^16.4.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
     "unexpected": "^10.0.2"
   },
   "dependencies": {
     "object-assign": "^4.0.1",
-    "react-render-hook": "^1.0.0"
+    "react-render-hook": "^1.1.1"
   }
 }
