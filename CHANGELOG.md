@@ -38,3 +38,6 @@ Fixed React.Fragment support for React 16.4
 
 ## v3.0.4
 Fixed support for React 16.5
+
+## v4.0.0
+Update dependencies to support React 16.9

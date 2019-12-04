@@ -1,6 +1,6 @@
 {
   "name": "unexpected-htmllike-reactrendered-adapter",
-  "version": "3.0.4",
+  "version": "4.0.0",
   "scripts": {
     "build": "babel src -d lib --source-maps true --config-file ./.babelrc",
     "prepublish": "npm run build",
